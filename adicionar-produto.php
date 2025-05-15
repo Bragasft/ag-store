@@ -15,15 +15,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add'])) {
     $nome = $_POST['nome'] ?? '';
     $preco = $_POST['preco'] ?? '';
     $descricao = $_POST['descricao'] ?? '';
-    $imagem1 = $_POST['imagem1'] ?? '';
-    $imagem2 = $_POST['imagem2'] ?? '';
-    $imagem3 = $_POST['imagem3'] ?? '';
+    $upload_dir = "uploads/";
+    $imagens = [];
+
+    foreach (['imagem1', 'imagem2', 'imagem3'] as $campo) {
+        if (isset($_FILES[$campo]) && $_FILES[$campo]['error'] === UPLOAD_ERR_OK) {
+            $tmp_name = $_FILES[$campo]['tmp_name'];
+            $filename = basename($_FILES[$campo]['name']);
+            $destination = $upload_dir . time() . '_' . $filename;
+
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+
+            if (move_uploaded_file($tmp_name, $destination)) {
+                $imagens[] = $destination;
+            }
+        }
+    }
 
     $novo_produto = [
         "nome" => $nome,
         "preco" => $preco,
         "descricao" => $descricao,
-        "imagens" => [$imagem1, $imagem2, $imagem3]
+        "imagens" => $imagens
     ];
 
     $produtos[] = $novo_produto;
@@ -86,7 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add'])) {
 
     a.button:hover {
       background-color: #3949ab;
-      
     }
 
     form {
@@ -125,16 +139,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add'])) {
 
     .top-bar {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
       margin-bottom: 30px;
     }
-    .top-bar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
   </style>
 </head>
 <body>
@@ -145,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add'])) {
       <a href="admin-dashboard.php" class="button">Voltar</a>
     </div>
 
-    <form action="adicionar-produto.php" method="POST">
+    <form action="adicionar-produto.php" method="POST" enctype="multipart/form-data">
       <label for="nome">Nome:</label>
       <input type="text" id="nome" name="nome" required>
 
@@ -155,14 +163,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add'])) {
       <label for="descricao">Descrição:</label>
       <textarea id="descricao" name="descricao" required></textarea>
 
-      <label for="imagem1">Imagem 1 (URL):</label>
-      <input type="text" id="imagem1" name="imagem1" required>
+      <label for="imagem1">Imagem 1:</label>
+      <input type="file" id="imagem1" name="imagem1" accept="image/*" required>
 
-      <label for="imagem2">Imagem 2 (URL):</label>
-      <input type="text" id="imagem2" name="imagem2">
+      <label for="imagem2">Imagem 2:</label>
+      <input type="file" id="imagem2" name="imagem2" accept="image/*">
 
-      <label for="imagem3">Imagem 3 (URL):</label>
-      <input type="text" id="imagem3" name="imagem3">
+      <label for="imagem3">Imagem 3:</label>
+      <input type="file" id="imagem3" name="imagem3" accept="image/*">
 
       <button type="submit" name="add">Adicionar Produto</button>
     </form>
