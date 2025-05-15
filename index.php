@@ -43,25 +43,25 @@ if (file_exists('produtos.json')) {
         <a href="prod-destaque04.html">
           <img src="PERFUME DESTAQUE 04.png" alt="Asad">
         </a>
-        <p><strong>ASAD</strong><br>Lattafa<br><span>R$ 444,44</span></p>
+        <p><strong>ASAD</strong><br>Lattafa<br><span>R$ 279,99</span></p>
       </div>
       <div class="product">
         <a href="prod-destaque03.html">
           <img src="PERFUME DESTAQUE 03.png" alt="Sabah">
         </a>
-        <p><strong>Sabah Al Ward</strong><br>Lattafa<br><span>R$ 333,33</span></p>
+        <p><strong>Sabah Al Ward</strong><br>Lattafa<br><span>R$ 419,99</span></p>
       </div>
       <div class="product">
         <a href="prod-destaque02.html">
           <img src="PERFUME DESTAQUE 02.png" alt="Yara">
         </a>
-        <p><strong>Yara</strong><br>Lattafa<br><span>R$ 222,22</span></p>
+        <p><strong>Yara</strong><br>Lattafa<br><span>R$ 279,99</span></p>
       </div>
       <div class="product">
         <a href="prod-destaque01.html">
           <img src="PERFUME DESTAQUE 01.png" alt="Mont'Anne">
         </a>
-        <p><strong>I Love Mont'Anne</strong><br>Parfums Mont Anne<br><span>R$ 111,11</span></p>
+        <p><strong>I Love Mont'Anne</strong><br>Parfums Mont Anne<br><span>R$ 179,99</span></p>
       </div>
     </div>
   </section>
