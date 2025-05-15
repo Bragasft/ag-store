@@ -20,7 +20,7 @@ if (file_exists('produtos.json')) {
       <h1>Descubra fragrâncias que definem você</h1>
       <p>Fragrâncias inspiradas, preços especiais, entrega rápida.</p>
      <div class="buttons">
-      <a href="exploracao.PHP" class="btn">EXPLORAR</a>
+      <a href="exploracao.php" class="btn">EXPLORAR</a>
     </div>
 
     </div>
