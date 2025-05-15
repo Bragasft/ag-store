@@ -131,20 +131,26 @@ if (!isset($_SESSION['admin'])) {
     <canvas id="graficoPedidos" style="max-height: 300px;"></canvas>
 </div>
 <?php
-$contagem = [];
+$contagem = [];$contagem = [];
+
 if (file_exists('pedidos.json')) {
-    $pedidos = json_decode(file_get_contents('pedidos.json'), true);
-    foreach ($pedidos as $pedido) {
-        foreach ($pedido as $item) {
-            $nome = $item['nome'];
-            $qtd = intval($item['quantidade']);
-            if (!isset($contagem[$nome])) {
-                $contagem[$nome] = 0;
+    $conteudo = file_get_contents('pedidos.json');
+    $pedidos = json_decode($conteudo, true);
+
+    if (is_array($pedidos)) {
+        foreach ($pedidos as $pedido) {
+            foreach ($pedido as $item) {
+                $nome = $item['nome'];
+                $qtd = intval($item['quantidade']);
+                if (!isset($contagem[$nome])) {
+                    $contagem[$nome] = 0;
+                }
+                $contagem[$nome] += $qtd;
             }
-            $contagem[$nome] += $qtd;
         }
     }
 }
+
 $labels = json_encode(array_keys($contagem));
 $valores = json_encode(array_values($contagem));
 ?>
