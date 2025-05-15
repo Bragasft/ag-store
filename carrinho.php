@@ -164,25 +164,32 @@
     }
 
     function finalizarCompra() {
-      const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+  const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-      fetch('registrar-pedido.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(carrinho)
-      }).then(() => {
-        const mensagem = carrinho.map(item => `${item.quantidade}x ${item.nome}`).join('\n');
-        const texto = encodeURIComponent("Olá, gostaria de finalizar a compra com:\n" + mensagem);
-        const telefone = "5562999842949";
-        const url = `https://wa.me/${telefone}?text=${texto}`;
+  // Envia os dados para registrar-pedido.php
+  fetch('registrar-pedido.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(carrinho)
+  })
+  .then(response => response.json())
+  .then(dados => {
+    console.log(dados); // debug
+    // Após registrar o pedido, envia para o WhatsApp
+    const mensagem = carrinho.map(item => `${item.quantidade}x ${item.nome}`).join('\n');
+    const texto = encodeURIComponent("Olá, gostaria de finalizar a compra com:\n" + mensagem);
+    const telefone = "5562999842949";
+    const url = `https://wa.me/${telefone}?text=${texto}`;
 
-        window.open(url, "_blank");
-        localStorage.removeItem('carrinho');
-        window.location.reload();
-      });
-    }
+    window.open(url, "_blank");
+    localStorage.removeItem('carrinho');
+    window.location.reload();
+  })
+  .catch(erro => console.error('Erro ao registrar pedido:', erro));
+}
+
 
     atualizarCarrinho();
   </script>
