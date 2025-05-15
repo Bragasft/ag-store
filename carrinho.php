@@ -164,10 +164,21 @@ const itemTotal = preco * item.quantidade;
     }
 
     function finalizarCompra() {
-  if (carrinho.length === 0) {
-    alert("Seu carrinho está vazio.");
-    return;
-  }
+  const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+  fetch('registrar-pedido.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(carrinho)
+  }).then(() => {
+    const mensagem = carrinho.map(item => `${item.quantidade}x ${item.nome}`).join('\n');
+    const texto = encodeURIComponent("Olá, gostaria de finalizar a compra com:\n" + mensagem);
+    window.location.href = "https://wa.me/SEUNUMERO?text=" + texto;
+    localStorage.removeItem('carrinho');
+  });
+}
 
   let mensagem = "Olá, gostaria de finalizar a compra com:\n";
 
