@@ -166,7 +166,16 @@
     function finalizarCompra() {
   const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-  // Envia os dados para registrar-pedido.php
+  // Prepara a mensagem do WhatsApp
+  const mensagem = carrinho.map(item => `${item.quantidade}x ${item.nome}`).join('\n');
+  const texto = encodeURIComponent("Olá, gostaria de finalizar a compra com:\n" + mensagem);
+  const telefone = "5562999842949";
+  const urlWhatsApp = `https://wa.me/${telefone}?text=${texto}`;
+
+  // Abre o WhatsApp primeiro (antes do fetch)
+  window.open(urlWhatsApp, "_blank");
+
+  // Registra o pedido no servidor
   fetch('registrar-pedido.php', {
     method: 'POST',
     headers: {
@@ -174,21 +183,13 @@
     },
     body: JSON.stringify(carrinho)
   })
-  .then(response => response.json())
-  .then(dados => {
-    console.log(dados); // debug
-    // Após registrar o pedido, envia para o WhatsApp
-    const mensagem = carrinho.map(item => `${item.quantidade}x ${item.nome}`).join('\n');
-    const texto = encodeURIComponent("Olá, gostaria de finalizar a compra com:\n" + mensagem);
-    const telefone = "5562999842949";
-    const url = `https://wa.me/${telefone}?text=${texto}`;
-
-    window.open(url, "_blank");
+  .then(() => {
     localStorage.removeItem('carrinho');
-    window.location.reload();
+    window.location.reload(); // limpa e atualiza a página
   })
   .catch(erro => console.error('Erro ao registrar pedido:', erro));
 }
+
 
 
     atualizarCarrinho();
