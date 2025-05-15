@@ -56,7 +56,6 @@ if (!isset($_SESSION['admin'])) {
             flex: 1;
             padding: 40px;
             background-color: #fff;
-            margin-left: 220px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
