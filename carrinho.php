@@ -119,27 +119,34 @@
   <script>
     let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-    function finalizarCompra() {
-  const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    function atualizarCarrinho() {
+      const carrinhoContainer = document.getElementById('carrinhoItens');
+      carrinhoContainer.innerHTML = '';
+      let total = 0;
 
-  fetch('registrar-pedido.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(carrinho)
-  }).then(() => {
-    const mensagem = carrinho.map(item => `${item.quantidade}x ${item.nome}`).join('\n');
-    const texto = encodeURIComponent("Olá, gostaria de finalizar a compra com:\n" + mensagem);
-    const telefone = "5562999842949";
-    const url = `https://wa.me/${telefone}?text=${texto}`;
-    
-    window.open(url, "_blank");
-    localStorage.removeItem('carrinho');
-    window.location.reload(); // atualiza a página
-  });
-}
+      carrinho.forEach((item, index) => {
+        const preco = parseFloat(String(item.preco).replace("R$", "").replace(",", "."));
+        const itemTotal = preco * item.quantidade;
 
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.classList.add('item');
+
+        div.innerHTML = `
+          <img src="${item.imagem}" alt="${item.nome}">
+          <div class="item-info">
+            <h3>${item.nome}</h3>
+            <p>Preço: R$ ${parseFloat(item.preco).toFixed(2)}</p>
+            <p>Quantidade: <input type="number" value="${item.quantidade}" min="1" onchange="atualizarQuantidade(${index}, this.value)" /></p>
+          </div>
+          <div class="item-actions">
+            <button class="remove-btn" onclick="removerItem(${index})">Remover</button>
+          </div>
+        `;
+
+        carrinhoContainer.appendChild(div);
+      });
 
       document.getElementById('total').innerText = 'Total: R$ ' + total.toFixed(2);
     }
@@ -157,34 +164,25 @@
     }
 
     function finalizarCompra() {
-  const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+      const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-  fetch('registrar-pedido.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(carrinho)
-  }).then(() => {
-    const mensagem = carrinho.map(item => `${item.quantidade}x ${item.nome}`).join('\n');
-    const texto = encodeURIComponent("Olá, gostaria de finalizar a compra com:\n" + mensagem);
-    window.location.href = "https://wa.me/SEUNUMERO?text=" + texto;
-    localStorage.removeItem('carrinho');
-  });
-}
+      fetch('registrar-pedido.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(carrinho)
+      }).then(() => {
+        const mensagem = carrinho.map(item => `${item.quantidade}x ${item.nome}`).join('\n');
+        const texto = encodeURIComponent("Olá, gostaria de finalizar a compra com:\n" + mensagem);
+        const telefone = "5562999842949";
+        const url = `https://wa.me/${telefone}?text=${texto}`;
 
-  let mensagem = "Olá, gostaria de finalizar a compra com:\n";
-
-  carrinho.forEach(item => {
-    mensagem += `${item.quantidade}x ${item.nome}\n`;
-  });
-
-  const telefone = "5562999842949"; 
-  const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-
-  window.open(url, "_blank");
-}
-
+        window.open(url, "_blank");
+        localStorage.removeItem('carrinho');
+        window.location.reload();
+      });
+    }
 
     atualizarCarrinho();
   </script>
