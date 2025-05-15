@@ -35,7 +35,7 @@ Fragrâncias inspiradas nas melhores marcas, com um toque especial de exclusivid
 
 > Abaixo, um exemplo da página de produtos com destaques:
 
-![Preview do site](preview.png)
+![Preview do site](preview.jpg)
 
 ---
 
