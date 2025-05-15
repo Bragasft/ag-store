@@ -9,6 +9,8 @@ if (!isset($_SESSION['admin'])) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,9 +128,55 @@ if (!isset($_SESSION['admin'])) {
         <h1>Painel Administrativo</h1>
 
         <div class="espaco-livre">
-            <p>Espaço livre para gráficos e métricas (visitas, status dos pedidos, etc.).</p>
-        </div>
-    </div>
+    <canvas id="graficoPedidos" style="max-height: 300px;"></canvas>
+</div>
+<?php
+$contagem = [];
+if (file_exists('pedidos.json')) {
+    $pedidos = json_decode(file_get_contents('pedidos.json'), true);
+    foreach ($pedidos as $pedido) {
+        foreach ($pedido as $item) {
+            $nome = $item['nome'];
+            $qtd = intval($item['quantidade']);
+            if (!isset($contagem[$nome])) {
+                $contagem[$nome] = 0;
+            }
+            $contagem[$nome] += $qtd;
+        }
+    }
+}
+$labels = json_encode(array_keys($contagem));
+$valores = json_encode(array_values($contagem));
+?>
+<script>
+const ctx = document.getElementById('graficoPedidos').getContext('2d');
+const grafico = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo $labels; ?>,
+        datasets: [{
+            label: 'Produtos Finalizados',
+            data: <?php echo $valores; ?>,
+            backgroundColor: '#5C6BC0',
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
 
 </body>
 </html>
