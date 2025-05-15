@@ -1,0 +1,22 @@
+[
+    {
+        "nome": "ZAADD",
+        "preco": "250,00",
+        "descricao": "Zaad \u00e9 ideal para homens sofisticados e sonhadores, que levam a vida com intensidade, seguindo a pr\u00f3pria intui\u00e7\u00e3o e se mantendo aberto a grandes paix\u00f5es. Com op\u00e7\u00f5es de Eau de Parfum, as fragr\u00e2ncias Zaad s\u00e3o ideais para homens que desejam conquistar o mundo.",
+        "imagens": [
+            "http:\/\/localhost\/projeto\/PERFUME%20DESTAQUE%2004.png",
+            "http:\/\/localhost\/projeto\/PERFUME%20DESTAQUE%2004.png",
+            "https:\/\/res.cloudinary.com\/beleza-na-web\/image\/upload\/w_297,f_auto,fl_progressive,q_auto:eco,w_80\/dpr_2.0\/v1\/imagens\/products\/B83529\/Blend_Cardamom_Eau_Parfum_B83529.jpg"
+        ]
+    },
+    {
+        "nome": "QUASER",
+        "preco": "175,99",
+        "descricao": "O Quasar Drop XX Desodorante Col\u00f4nia  foi feito para quem busca intensidade e coragem e isso reflete em sua embalagem e fragr\u00e2ncia, que possuem muita personalidade. Quasar Drop XX \u00e9 uma grande inova\u00e7\u00e3o Foug\u00e9re Floral unissex, pois ainda n\u00e3o existia esse tipo de fragr\u00e2ncia.",
+        "imagens": [
+            "http:\/\/localhost\/projeto\/PERFUME%20DESTAQUE%2003.png",
+            "http:\/\/localhost\/projeto\/PERFUME%20DESTAQUE%2003.png",
+            "http:\/\/localhost\/projeto\/PERFUME%20DESTAQUE%2003.png"
+        ]
+    }
+]
