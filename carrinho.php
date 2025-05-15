@@ -164,10 +164,23 @@ const itemTotal = preco * item.quantidade;
     }
 
     function finalizarCompra() {
-      alert("Compra finalizada!");
-      localStorage.removeItem('carrinho');
-      window.location.reload();
-    }
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio.");
+    return;
+  }
+
+  let mensagem = "Olá, gostaria de finalizar a compra com:\n";
+
+  carrinho.forEach(item => {
+    mensagem += `${item.quantidade}x ${item.nome}\n`;
+  });
+
+  const telefone = "5562999842949"; 
+  const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+  window.open(url, "_blank");
+}
+
 
     atualizarCarrinho();
   </script>
